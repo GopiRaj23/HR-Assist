@@ -36,6 +36,19 @@
   - Refresh tokens enable long-lived sessions without long-lived access tokens
   - Token revocation requires additional infrastructure (blacklist) if needed later
 
+## ADR-004: MVP Simplification — Backend-Only with In-Memory Storage
+
+- **Date:** 2026-03-18
+- **Status:** Accepted
+- **Context:** The MVP needs to demonstrate the core interview analysis pipeline (upload → transcribe → segment → analyze → report) as quickly as possible. Full-stack with PostgreSQL adds complexity without validating the core value proposition.
+- **Decision:** MVP is backend-only (no React frontend). Uses in-memory Map storage instead of PostgreSQL. OpenAI Whisper for transcription, GPT-4o for analysis. Audio files uploaded via multipart POST, reports retrieved via GET.
+- **Consequences:**
+  - Faster time to working prototype
+  - Reports are lost on server restart (acceptable for MVP)
+  - No authentication (deferred to post-MVP)
+  - Frontend can be added later consuming the same REST API
+  - Easy to swap in-memory store for PostgreSQL later (same interface)
+
 ---
 
 ## Template

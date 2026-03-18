@@ -1,25 +1,33 @@
 # HR Assist - Project Intelligence
 
 ## Project Overview
-HR Assist is a human resources management application.
+HR Assist is an AI-powered interview analysis tool that accepts Zoom interview recordings,
+transcribes them, segments Q&A pairs, analyzes candidate answers, and generates structured reports.
 
-**Tech Stack:**
-- Frontend: React 18 + TypeScript + Vite
+**Tech Stack (MVP):**
 - Backend: Node.js + Express + TypeScript
-- Database: PostgreSQL + Prisma ORM
+- AI: OpenAI Whisper (transcription) + GPT-4o (analysis)
+- Storage: In-memory (Map-based, no database for MVP)
 - API: REST (versioned at /api/v1)
-- Testing: Vitest (frontend), Jest (backend)
-- Auth: JWT-based
+- File Upload: Multer
 
 ## Directory Structure
 ```
 src/
-  client/          # React frontend (Vite)
-  server/          # Express API server
-  shared/          # Shared types and utilities
-docs/              # Architecture, decisions, API contracts
-scripts/           # Automation scripts
-prisma/            # Database schema and migrations
+  index.ts              # Express server entry point
+  config/               # Environment configuration
+  types/                # TypeScript interfaces
+  storage/              # In-memory report storage
+  middleware/            # Upload (multer) and error handling
+  transcription/        # OpenAI Whisper integration
+  ai/                   # Q&A segmentation and GPT analysis
+  report/               # Report generation
+  services/             # Pipeline orchestration
+  controllers/          # Request handlers
+  routes/               # Route definitions
+docs/                   # Architecture, decisions, API contracts
+scripts/                # Automation scripts
+uploads/                # Temporary audio files (gitignored)
 ```
 
 ## Engineering Guardrails
@@ -38,10 +46,14 @@ prisma/            # Database schema and migrations
 - Include error handling at system boundaries
 - Modular and maintainable design
 - Avoid tight coupling
-- No raw SQL — use Prisma client
-- All components must have TypeScript props interfaces
 - All new endpoints require input validation
 - API changes must update docs/api_contracts.md
+
+### Commands
+- Dev server: `npm run dev`
+- Build: `npm run build`
+- Start (prod): `npm start`
+- Validation: `bash scripts/post_task.sh`
 
 ## Workflow
 

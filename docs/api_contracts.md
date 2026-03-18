@@ -42,34 +42,89 @@ All responses follow this structure:
 
 ---
 
-## Authentication
+## Interview Analysis (MVP — Active)
 
-| Method | Endpoint              | Description          |
-|--------|-----------------------|----------------------|
-| POST   | `/auth/login`         | Login with credentials |
-| POST   | `/auth/register`      | Register new user    |
-| POST   | `/auth/refresh`       | Refresh access token |
-| POST   | `/auth/logout`        | Invalidate refresh token |
+### Upload Audio
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/upload-audio` | Upload interview recording, triggers async analysis pipeline |
 
-## Employees
+**Request:** `multipart/form-data` with field `audio` (max 100MB, audio formats: mp3, mp4, m4a, wav, webm, ogg, flac)
 
-| Method | Endpoint              | Description          |
-|--------|-----------------------|----------------------|
-| GET    | `/employees`          | List employees (paginated) |
-| GET    | `/employees/:id`      | Get employee by ID   |
-| POST   | `/employees`          | Create employee      |
-| PUT    | `/employees/:id`      | Update employee      |
-| DELETE | `/employees/:id`      | Delete employee      |
+**Response (202):**
+```json
+{
+  "data": { "id": "uuid", "status": "processing" },
+  "error": null,
+  "meta": { "timestamp": "..." }
+}
+```
 
-## Departments
+### Reports
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/reports` | List all report summaries |
+| GET | `/reports/:id` | Get full interview report |
 
-| Method | Endpoint              | Description          |
-|--------|-----------------------|----------------------|
-| GET    | `/departments`        | List departments     |
-| GET    | `/departments/:id`    | Get department by ID |
-| POST   | `/departments`        | Create department    |
-| PUT    | `/departments/:id`    | Update department    |
-| DELETE | `/departments/:id`    | Delete department    |
+**Report object:**
+```json
+{
+  "id": "uuid",
+  "fileName": "interview.mp3",
+  "uploadedAt": "ISO 8601",
+  "status": "processing | completed | failed",
+  "overallScore": 7.5,
+  "summary": "Executive summary...",
+  "strengths": ["..."],
+  "weaknesses": ["..."],
+  "recommendation": "Hire — ...",
+  "questionAnalyses": [
+    {
+      "questionNumber": 1,
+      "question": "...",
+      "answerSummary": "...",
+      "relevanceScore": 8,
+      "clarityScore": 7,
+      "confidenceScore": 6,
+      "strengths": ["..."],
+      "weaknesses": ["..."]
+    }
+  ],
+  "transcript": [
+    { "speaker": "Speaker 1", "text": "...", "start": 0.0, "end": 5.2 }
+  ]
+}
+```
+
+---
+
+## Future Endpoints (Not Yet Implemented)
+
+### Authentication
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/auth/login` | Login with credentials |
+| POST | `/auth/register` | Register new user |
+| POST | `/auth/refresh` | Refresh access token |
+| POST | `/auth/logout` | Invalidate refresh token |
+
+### Employees
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/employees` | List employees (paginated) |
+| GET | `/employees/:id` | Get employee by ID |
+| POST | `/employees` | Create employee |
+| PUT | `/employees/:id` | Update employee |
+| DELETE | `/employees/:id` | Delete employee |
+
+### Departments
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/departments` | List departments |
+| GET | `/departments/:id` | Get department by ID |
+| POST | `/departments` | Create department |
+| PUT | `/departments/:id` | Update department |
+| DELETE | `/departments/:id` | Delete department |
 
 ---
 
