@@ -1,0 +1,39 @@
+{
+  "name": "hr-assist",
+  "version": "1.0.0",
+  "description": "AI-powered interview analysis tool — transcribe, analyze, and report on Zoom interview recordings",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "echo \"lint not configured\"",
+    "test": "echo \"tests not configured\""
+  },
+  "keywords": [
+    "hr",
+    "interview",
+    "ai",
+    "transcription",
+    "analysis"
+  ],
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.79.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "groq-sdk": "^1.1.1",
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^11.0.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/multer": "^1.4.12",
+    "@types/uuid": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3"
+  }
+}
